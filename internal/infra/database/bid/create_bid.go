@@ -111,7 +111,11 @@ func (bd *BidRepository) CreateBid(
 }
 
 func getAuctionInterval() time.Duration {
-	auctionInterval := os.Getenv("AUCTION_INTERVAL")
+	auctionInterval := os.Getenv("AUCTION_DURATION")
+	if auctionInterval == "" {
+		auctionInterval = os.Getenv("AUCTION_INTERVAL")
+	}
+
 	duration, err := time.ParseDuration(auctionInterval)
 	if err != nil {
 		return time.Minute * 5
